@@ -1,6 +1,5 @@
 backend/.idea/
 frontend/.idea/
-.DS_Store
-backend/.DS_Store
 backend/target
+frontend/out/
 */.DS_Store
