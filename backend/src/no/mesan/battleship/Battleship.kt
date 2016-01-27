@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 open class Application {
     companion object {
         @JvmStatic public fun main(args: Array<String>) {
-            SpringApplication.run(no.mesan.battleshipApplication::class.java, *args)
+            SpringApplication.run(Application::class.java, *args)
         }
     }
 }
