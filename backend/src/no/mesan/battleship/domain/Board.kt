@@ -24,16 +24,16 @@ data class Board(val board: Array<Array<Cell>>) {
 
 }
 
-data class Coordinate(@JsonProperty(value = "first") val first: Int, @JsonProperty(value = "second") val second: Int)
+data class Coordinate(@JsonProperty("x") val x: Int, @JsonProperty("y") val y: Int)
 
-data class Ship(@JsonProperty(value = "start") val start: Coordinate, @JsonProperty(value = "end") val end: Coordinate) {
+data class Ship(@JsonProperty("start") val start: Coordinate, @JsonProperty("end") val end: Coordinate) {
 
     init {
-        if ((start.first != end.first && start.second != end.second)) {
+        if ((start.x != end.x && start.y != end.y)) {
             throw IllegalArgumentException("Ship must be placed either horizontally or vertically.")
         }
     }
 
-    fun length() = Math.abs(end.first - start.first) + Math.abs(end.second - start.second) + 1
+    fun length() = Math.abs(end.x - start.x) + Math.abs(end.y - start.y) + 1
 
 }
