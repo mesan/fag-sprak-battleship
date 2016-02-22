@@ -1,9 +1,7 @@
 package no.mesan.battleship.endpoint
 
 import no.mesan.battleship.domain.Board
-import no.mesan.battleship.domain.GameId
 import no.mesan.battleship.domain.Ship
-import no.mesan.battleship.domain.Username
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -18,14 +16,15 @@ class BattleshipRestController {
             consumes = arrayOf("application/json"),
             method = arrayOf(RequestMethod.POST),
             value = "/newGame")
-    fun newGame(@RequestParam(value = "username", required = false) username: Username?,
-                @RequestBody ships: List<Ship>): Username {
+    fun newGame(@RequestParam(value = "username") username: String,
+                @RequestBody ships: List<Ship>): String {
         println(ships)
-        return username ?: Username("Hei")
+        return username
+
     }
 
-    @RequestMapping(value = "gameState")
-    fun getGameState(@RequestParam(value = "id", required = true) id: GameId): Board? {
+    @RequestMapping(value = "/gameState/{id}")
+    fun getGameState(@PathVariable id: Int): Board? {
         return null
     }
 

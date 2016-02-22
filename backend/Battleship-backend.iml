@@ -10,8 +10,8 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="KotlinJavaRuntime" level="project" />
-    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib:1.0.0-rc-1036" level="project" />
-    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-runtime:1.0.0-rc-1036" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib:1.0.0" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-runtime:1.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-web:1.3.2.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:1.3.2.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:1.3.2.RELEASE" level="project" />
@@ -36,7 +36,6 @@
     <orderEntry type="library" name="Maven: org.jboss.logging:jboss-logging:3.2.1.Final" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml:classmate:1.1.0" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.6.5" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.6.0" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.6.5" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-web:4.2.4.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-aop:4.2.4.RELEASE" level="project" />
@@ -45,5 +44,8 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-context:4.2.4.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:4.2.4.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:4.2.4.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.module:jackson-module-kotlin:2.6.4" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.6.4" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-reflect:1.0.0-beta-3595" level="project" />
   </component>
 </module>

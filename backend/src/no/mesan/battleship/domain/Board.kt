@@ -29,8 +29,8 @@ data class Coordinate(@JsonProperty("x") val x: Int, @JsonProperty("y") val y: I
 data class Ship(@JsonProperty("start") val start: Coordinate, @JsonProperty("end") val end: Coordinate) {
 
     init {
-        if ((start.x != end.x && start.y != end.y)) {
-            throw IllegalArgumentException("Ship must be placed either horizontally or vertically.")
+        require(start.x != end.x && start.y != end.y) {
+            "The ship must be placed either horizontally or vertically."
         }
     }
 
