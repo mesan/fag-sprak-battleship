@@ -1,6 +1,8 @@
 package no.mesan.battleship.domain
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import no.mesan.battleship.extensions.all2d
+import no.mesan.battleship.extensions.filter2d
 
 data class Cell(val isHit: Boolean = false, val isOccupied: Boolean = false) {
 
@@ -16,10 +18,26 @@ data class Board(val board: Array<Array<Cell>>) {
                 throw IllegalArgumentException("Board is not rectangular.")
             }
         }
+
     }
 
     companion object {
         fun empty(size: Int) = Board(Array(size, { Array(size, { Cell() }) }))
+        fun empty(xSize: Int, ySize: Int) = Board(Array(xSize, { Array(ySize, { Cell() }) }))
+    }
+
+    fun withShips(ships: List<Ship>): Board {
+        require(board.all { it.all { !it.isOccupied } })
+        throw NotImplementedError()
+    }
+
+    fun hit(square: Coordinate): Board {
+        throw NotImplementedError()
+    }
+
+    fun isCompleted(): Boolean {
+        return board.filter2d { it.isOccupied }
+                .all2d { it.isHit }
     }
 
 }
