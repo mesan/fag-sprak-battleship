@@ -12,27 +12,28 @@ operator fun <K, V> Map<K, V>.minus(key: K): Map<K, V> = filterNot { it.key == k
 
 
 // 2D array higher order functions.
-inline fun <T, reified R> Array<Array<T>>.map2d(mapper: (T) -> R): Array<Array<R>> {
-    return map { column ->
-        column.map { value ->
-            mapper(value)
-        }.toTypedArray()
-    }.toTypedArray()
-}
+fun <T, R> List<List<T>>.map2d(mapper: (T) -> R): List<List<R>> = map { it.map { mapper(it) } }
 
-inline fun <reified T> Array<Array<T>>.filter2d(predicate: (T) -> Boolean): Array<Array<T>> {
-    return map { column ->
-        column.filter { value ->
-            predicate(value)
-        }.toTypedArray()
-    }.toTypedArray()
-}
+fun <T> List<List<T>>.filter2d(predicate: (T) -> Boolean): List<List<T>> = map { it.filter { predicate(it) } }
 
-inline fun <T> Array<Array<T>>.all2d(predicate: (T) -> Boolean): Boolean {
-    return all { column ->
-        column.all { value ->
-            predicate(value)
+fun <T> List<List<T>>.all2d(predicate: (T) -> Boolean): Boolean = all { it.all { predicate(it) } }
+
+fun <T> List<List<T>>.any2d(predicate: (T) -> Boolean): Boolean = any { it.any { predicate(it) } }
+
+
+// List creation functions
+fun <T> listOfLists(xSize: Int, ySize: Int, initializer: (Int) -> T): List<List<T>> {
+    val list = mutableListOf<List<T>>()
+
+    for (i in 0 until xSize) {
+        val inner = mutableListOf<T>()
+        for (j in 0 until ySize) {
+            inner.add(initializer(i * ySize + j))
         }
+        list.add(inner)
     }
+
+    return list
 }
-}
+
+fun <T> listOfLists(size: Int, initializer: (Int) -> T): List<List<T>> = listOfLists(size, size, initializer)

@@ -3,6 +3,7 @@ package no.mesan.battleship.domain
 import com.fasterxml.jackson.annotation.JsonProperty
 import no.mesan.battleship.extensions.all2d
 import no.mesan.battleship.extensions.filter2d
+import no.mesan.battleship.extensions.listOfLists
 
 data class Cell(val isHit: Boolean = false, val isOccupied: Boolean = false) {
 
@@ -10,24 +11,23 @@ data class Cell(val isHit: Boolean = false, val isOccupied: Boolean = false) {
 
 }
 
-data class Board(val board: Array<Array<Cell>>) {
+data class Board(val board: List<List<Cell>>) {
     init {
         val size = if (board.size > 0) board[0].size else 0
-        for (arr in board) {
-            if (arr.size != size) {
-                throw IllegalArgumentException("Board is not rectangular.")
+        for (column in board) {
+            if (column.size != size) {
+                throw IllegalArgumentException("Board is not a square.")
             }
         }
-
     }
 
     companion object {
-        fun empty(size: Int) = Board(Array(size, { Array(size, { Cell() }) }))
-        fun empty(xSize: Int, ySize: Int) = Board(Array(xSize, { Array(ySize, { Cell() }) }))
+        fun empty(size: Int) = Board(listOfLists(size, { Cell() }))
+        fun empty(xSize: Int, ySize: Int) = Board(listOfLists(xSize, ySize, { Cell() }))
     }
 
     fun withShips(ships: List<Ship>): Board {
-        require(board.all { it.all { !it.isOccupied } })
+        require(board.all2d { !it.isOccupied })
         throw NotImplementedError()
     }
 
