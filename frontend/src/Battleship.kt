@@ -3,24 +3,33 @@ import net.yested.Component
 import net.yested.div
 import net.yested.el
 
+@native class GameState {
+    val board : Array<IntArray>
+}
+
 fun main(args: Array<String>) {
+    get<String>("test.txt") {
+        response ->
+        val gamestate = JSON.parse<GameState>(response)
+        println(response)
+        displayBoard(gamestate.board)
+    }
+}
 
-//    get<String>("test.txt") {
-//        text -> e.textContent = text
-//    }
+fun displayBoard(board:Array<IntArray>) {
+    val rows = board.size
+    var cols = board[0].size
 
-    val rows = 10
-    val cols = 10
-
-    val test = div {
+    val test = div (clazz = "table") {
         for (row in 0 until rows) {
-            div {
+            div (clazz = "row"){
                 for (col in 0 until cols) {
-                    span {
+                    div(clazz = "cell") {
+                        val value = board[row][col]
                         onmousedown = {
-                            println("Click [$row,$col]")
+                            println("Cell [$row,$col] contains $value")
                         }
-                        +"Cell"
+                        +"$value"
                     }
                 }
             }
@@ -28,6 +37,7 @@ fun main(args: Array<String>) {
     }
 
     setContent(test)
+    println("Displayed board")
 }
 
 fun setContent(n: Component) {
