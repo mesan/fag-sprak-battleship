@@ -33,7 +33,7 @@ class BattleshipServiceImpl : BattleshipService {
 
     override fun pollGame(gameId: Int): Game? = store[gameId]
 
-    override fun hit(gameId: Int, player: String, coordinate: Coordinate): Game? = store[gameId]?.hit(coordinate)
+    override fun hit(gameId: Int, player: String, coordinate: Coordinate): Game? = store[gameId]?.hit(coordinate, player)
 
     override fun isCompleted(gameId: Int): Boolean = store[gameId]?.isCompleted() ?: false
 

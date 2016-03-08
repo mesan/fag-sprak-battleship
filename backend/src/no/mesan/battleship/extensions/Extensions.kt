@@ -11,7 +11,7 @@ package no.mesan.battleship.extensions
 operator fun <K, V> Map<K, V>.minus(key: K): Map<K, V> = filterNot { it.key == key }
 
 
-// 2D array higher order functions.
+// Higher order functions on 2D lists.
 fun <T, R> List<List<T>>.map2d(mapper: (T) -> R): List<List<R>> = map { it.map { mapper(it) } }
 
 fun <T> List<List<T>>.filter2d(predicate: (T) -> Boolean): List<List<T>> = map { it.filter { predicate(it) } }
@@ -21,7 +21,7 @@ fun <T> List<List<T>>.all2d(predicate: (T) -> Boolean): Boolean = all { it.all {
 fun <T> List<List<T>>.any2d(predicate: (T) -> Boolean): Boolean = any { it.any { predicate(it) } }
 
 
-// List creation functions
+// 2D list creation functions
 fun <T> listOfLists(xSize: Int, ySize: Int, initializer: (Int) -> T): List<List<T>> {
     val list = mutableListOf<List<T>>()
 
