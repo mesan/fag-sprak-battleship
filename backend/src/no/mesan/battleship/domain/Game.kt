@@ -10,6 +10,16 @@ class Game private constructor(val gameId: Int, val player1: String, val player2
 
     fun isCompleted(): Boolean = player1Board.isCompleted() || player2Board.isCompleted()
 
+    fun getWinner(): String? {
+        if (player1Board.isCompleted()) {
+            return player2
+        } else if (player2Board.isCompleted()) {
+            return player1
+        } else {
+            return null
+        }
+    }
+
     fun hit(square: Coordinate): Game {
         if (isCompleted()) {
             throw IllegalStateException("Cannot perform hit() on a completed game.")

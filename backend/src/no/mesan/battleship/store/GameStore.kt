@@ -26,8 +26,8 @@ class GameStore private constructor(private val games: Map<Int, Game>) {
     fun get(gameId: Int): Game? = games[gameId]
 
     fun remove(gameId: Int): GameStore {
-        if(games.containsKey(gameId)) {
-           return GameStore(games - gameId)
+        if (games.containsKey(gameId)) {
+            return GameStore(games - gameId)
         }
 
         return this
