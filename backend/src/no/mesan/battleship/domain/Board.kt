@@ -6,12 +6,6 @@ import no.mesan.battleship.extensions.filter2d
 import no.mesan.battleship.extensions.listOfLists
 import no.mesan.battleship.extensions.map2d
 
-data class Cell(val id: Int, val isHit: Boolean = false, val isOccupied: Boolean = false) {
-
-    fun hit() = if (isHit) this else Cell(id, true, isOccupied)
-
-}
-
 data class Board(val board: List<List<Cell>>) {
     init {
         val size = if (board.size > 0) board[0].size else 0
@@ -60,6 +54,12 @@ data class Board(val board: List<List<Cell>>) {
             return board[coordinate.x][coordinate.y]
         }
     }
+
+}
+
+data class Cell(val id: Int, val isHit: Boolean = false, val isOccupied: Boolean = false) {
+
+    fun hit() = if (isHit) this else Cell(id, true, isOccupied)
 
 }
 
