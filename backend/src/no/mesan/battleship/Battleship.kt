@@ -8,7 +8,7 @@ open class Battleship {
     companion object {
         @JvmStatic fun main(args: Array<String>) {
             SpringApplicationBuilder(Battleship::class.java)
-                    .properties(mapOf(Pair("server.port", 83746)))
+                    .properties(mapOf(Pair("server.port", 8374)))
                     .build()
                     .run(*args)
         }
