@@ -11,7 +11,7 @@ interface BattleshipService {
 
     fun pollGame(gameId: Int): Game?
 
-    fun hit(gameId: Int, coordinate: Coordinate): Game?
+    fun hit(gameId: Int, player: String, coordinate: Coordinate): Game?
 
     fun isCompleted(gameId: Int): Boolean
 

@@ -16,16 +16,18 @@ class Game(val gameId: Int, val player1: String, val player2: String,
         }
     }
 
-    fun hit(square: Coordinate): Game {
+    fun hit(coordinate: Coordinate, player: String): Game {
         if (isCompleted()) {
             throw IllegalStateException("Cannot perform hit() on a completed game.")
         }
 
         val (newPlayer1, newPlayer2) =
                 if (turn) {
-                    Pair(player1Board.hit(square), player2Board)
+                    require(player == player1, { "${player1} tried to hit on the opponents turn." })
+                    Pair(player1Board.hit(coordinate), player2Board)
                 } else {
-                    Pair(player1Board, player2Board.hit(square))
+                    require(player == player2, { "${player2} tried to hit on the opponents turn." })
+                    Pair(player1Board, player2Board.hit(coordinate))
                 }
 
         return Game(gameId, player1, player2, newPlayer1, newPlayer2, !turn)

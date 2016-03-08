@@ -1,46 +1,48 @@
 package no.mesan.battleship.endpoint
 
 import no.mesan.battleship.domain.AwaitingGame
-import no.mesan.battleship.domain.Board
+import no.mesan.battleship.domain.Coordinate
+import no.mesan.battleship.domain.Game
 import no.mesan.battleship.domain.Ship
 import no.mesan.battleship.service.BattleshipService
-import no.mesan.battleship.store.AwaitingGameStore
-import no.mesan.battleship.store.GameStore
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
 @RestController
 class BattleshipRestController @Autowired constructor(val service: BattleshipService) {
 
-    init {
-        println(service.toString())
+    @RequestMapping(
+            consumes = arrayOf("application/json"),
+            method = arrayOf(RequestMethod.POST),
+            value = "/newGame/{username}")
+    fun newGame(@PathVariable username: String,
+                @RequestBody ships: List<Ship>): AwaitingGame {
+        return service.newGame(username, ships)
     }
 
-
-    val boardSize = 8
-
-    var store: GameStore = GameStore()
-    var waiting: AwaitingGameStore = AwaitingGameStore()
-
-    @RequestMapping("/emptyBoard")
-    fun emptyBoard(@RequestParam(value = "size", defaultValue = "10") size: Int): Board {
-
-        return Board.empty(size)
+    @RequestMapping(value = "/poll/{gameId}")
+    fun pollGame(@PathVariable gameId: Int): Game? {
+        return service.pollGame(gameId)
     }
 
     @RequestMapping(
             consumes = arrayOf("application/json"),
             method = arrayOf(RequestMethod.POST),
-            value = "/newGame")
-    fun newGame(@RequestParam(value = "username") username: String,
-                @RequestBody ships: List<Ship>): AwaitingGame {
-        val (game, waiting) = waiting.newGame(username, ships, boardSize, boardSize)
-        return game
+            value = "/hit/{gameId}/")
+    fun hit(@PathVariable gameId: Int,
+            @PathVariable username: String,
+            coordinate: Coordinate): Game? {
+        return service.hit(gameId, username, coordinate)
     }
 
-    @RequestMapping(value = "/gameState/{id}")
-    fun getGameState(@PathVariable id: Int): Board? {
-        return null
+    @RequestMapping(value = "/isCompleted/{gameId}")
+    fun isCompleted(gameId: Int): Boolean {
+        return service.isCompleted(gameId)
+    }
+
+    @RequestMapping(value = "/getWinner/{gameId}")
+    fun getWinner(gameId: Int): String? {
+        return service.getWinner(gameId)
     }
 
 }

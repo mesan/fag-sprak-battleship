@@ -21,7 +21,7 @@ class GameStore private constructor(private val games: Map<Int, Game>) {
 
     fun update(game: Game): GameStore = GameStore(games + (game.gameId to game))
 
-    fun get(gameId: Int): Game? = games[gameId]
+    operator fun get(gameId: Int): Game? = games[gameId]
 
     fun remove(gameId: Int): GameStore {
         if (games.containsKey(gameId)) {

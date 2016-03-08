@@ -4,21 +4,39 @@ import no.mesan.battleship.domain.AwaitingGame
 import no.mesan.battleship.domain.Coordinate
 import no.mesan.battleship.domain.Game
 import no.mesan.battleship.domain.Ship
+import no.mesan.battleship.store.GameStore
 import org.springframework.stereotype.Service
 
 @Service
 class BattleshipServiceImpl : BattleshipService {
 
-    override fun newGame(username: String, ships: List<Ship>): AwaitingGame = throw NotImplementedError()
+    val boardSize = 8
 
-    override fun pollGame(gameId: Int): Game? = throw NotImplementedError()
+    var store: GameStore = GameStore()
+    var waiting: AwaitingGame? = null
 
-    override fun hit(gameId: Int, coordinate: Coordinate): Game? = throw NotImplementedError()
+    private var gameId = 0
 
-    override fun isCompleted(gameId: Int): Boolean = throw NotImplementedError()
+    override fun newGame(username: String, ships: List<Ship>): AwaitingGame {
+        val awaiting = waiting
 
-    override fun getWinner(gameId: Int): String? = throw NotImplementedError()
+        if (awaiting == null) {
+            val game = AwaitingGame(gameId++, username, ships, boardSize, boardSize)
+            waiting = AwaitingGame(gameId++, username, ships, boardSize, boardSize)
+            return game
+        } else {
+            val (game, gameStore) = store.new(awaiting, username, ships)
+            store = gameStore
+            return AwaitingGame(awaiting.gameid, username, ships, boardSize, boardSize)
+        }
+    }
 
-    override fun toString() = "Hei"
+    override fun pollGame(gameId: Int): Game? = store[gameId]
+
+    override fun hit(gameId: Int, player: String, coordinate: Coordinate): Game? = store[gameId]?.hit(coordinate)
+
+    override fun isCompleted(gameId: Int): Boolean = store[gameId]?.isCompleted() ?: false
+
+    override fun getWinner(gameId: Int): String? = store[gameId]?.getWinner()
 
 }
