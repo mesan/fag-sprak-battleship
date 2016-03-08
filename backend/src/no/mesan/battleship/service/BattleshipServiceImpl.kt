@@ -25,9 +25,9 @@ class BattleshipServiceImpl : BattleshipService {
             waiting = AwaitingGame(gameId++, username, ships, boardSize, boardSize)
             return game
         } else {
-            val (game, gameStore) = store.new(awaiting, username, ships)
+            val gameStore = store.new(awaiting, username, ships)
             store = gameStore
-            return AwaitingGame(awaiting.gameid, username, ships, boardSize, boardSize)
+            return AwaitingGame(awaiting.gameId, username, ships, boardSize, boardSize)
         }
     }
 

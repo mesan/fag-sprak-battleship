@@ -10,13 +10,13 @@ class GameStore private constructor(private val games: Map<Int, Game>) {
 
     constructor() : this(mapOf())
 
-    fun new(awaitingGame: AwaitingGame, player2: String, player2Ships: List<Ship>): Pair<Game, GameStore> {
-        val game = Game(awaitingGame.gameid, awaitingGame.player1, player2,
+    fun new(awaitingGame: AwaitingGame, player2: String, player2Ships: List<Ship>): GameStore {
+        val game = Game(awaitingGame.gameId, awaitingGame.player1, player2,
                 awaitingGame.player1Board,
                 Board.empty(awaitingGame.xSize, awaitingGame.ySize).withShips(player2Ships),
                 true)
 
-        return (game to GameStore(games + (awaitingGame.gameid to game)))
+        return GameStore(games + (awaitingGame.gameId to game))
     }
 
     fun update(game: Game): GameStore = GameStore(games + (game.gameId to game))
