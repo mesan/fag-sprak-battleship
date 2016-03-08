@@ -4,11 +4,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.builder.SpringApplicationBuilder
 
 @SpringBootApplication
-open class Application {
+open class Battleship {
     companion object {
         @JvmStatic fun main(args: Array<String>) {
-            SpringApplicationBuilder(Application::class.java)
-                    .properties(mapOf(Pair("server.port", 83746)))
+            SpringApplicationBuilder(Battleship::class.java)
+                    .properties(mapOf(Pair("server.port", 8374)))
                     .build()
                     .run(*args)
         }

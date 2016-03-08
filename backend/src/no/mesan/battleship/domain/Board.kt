@@ -1,6 +1,5 @@
 package no.mesan.battleship.domain
 
-import com.fasterxml.jackson.annotation.JsonProperty
 import no.mesan.battleship.extensions.all2d
 import no.mesan.battleship.extensions.filter2d
 import no.mesan.battleship.extensions.listOfLists
@@ -29,7 +28,7 @@ data class Board(val board: List<List<Cell>>) {
     fun hit(coordinate: Coordinate): Board {
         val cell = this[coordinate] ?: throw IllegalArgumentException("Coordinate out of bounds.")
 
-        if(cell.isHit) {
+        if (cell.isHit) {
             throw IllegalArgumentException("Cell is already hit");
         }
 
@@ -54,30 +53,4 @@ data class Board(val board: List<List<Cell>>) {
             return board[coordinate.x][coordinate.y]
         }
     }
-
-}
-
-data class Cell(val id: Int, val isHit: Boolean = false, val isOccupied: Boolean = false) {
-
-    fun hit() = if (isHit) this else Cell(id, true, isOccupied)
-
-}
-
-data class Coordinate(@JsonProperty("x") val x: Int, @JsonProperty("y") val y: Int) {
-    init {
-        require(x >= 0, { "X-axis was negative (${x})" })
-        require(y >= 0, { "Y-axis was negative (${y})" })
-    }
-}
-
-data class Ship(@JsonProperty("start") val start: Coordinate, @JsonProperty("end") val end: Coordinate) {
-
-    init {
-        require(start.x != end.x && start.y != end.y) {
-            "The ship must be placed either horizontally or vertically."
-        }
-    }
-
-    fun length() = Math.abs(end.x - start.x) + Math.abs(end.y - start.y) + 1
-
 }
