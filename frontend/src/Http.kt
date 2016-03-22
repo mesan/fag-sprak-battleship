@@ -1,3 +1,5 @@
+package no.mesan.http
+
 import net.yested.AjaxRequest
 import net.yested.ajaxGet
 import net.yested.ajaxPost

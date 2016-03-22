@@ -2,6 +2,7 @@
 import net.yested.Component
 import net.yested.div
 import net.yested.el
+import no.mesan.http.get
 
 @native class GameState {
     val board : Array<IntArray>
