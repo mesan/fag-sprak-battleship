@@ -22,7 +22,7 @@ data class Board(val board: List<List<Cell>>) {
 
     fun withShips(ships: List<Ship>): Board {
         require(board.all2d { !it.isOccupied })
-        return throw NotImplementedError()
+        throw NotImplementedError()
     }
 
     fun hit(coordinate: Coordinate): Board {
