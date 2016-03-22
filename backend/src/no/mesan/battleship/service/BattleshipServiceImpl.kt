@@ -10,10 +10,11 @@ import org.springframework.stereotype.Service
 @Service
 class BattleshipServiceImpl : BattleshipService {
 
-    val boardSize = 8
+    private val boardSize: Int
+        get() = 8
 
-    var store: GameStore = GameStore()
-    var waiting: AwaitingGame? = null
+    private var store: GameStore = GameStore()
+    private var waiting: AwaitingGame? = null
 
     private var gameId = 0
 
@@ -21,8 +22,9 @@ class BattleshipServiceImpl : BattleshipService {
         val awaiting = waiting
 
         if (awaiting == null) {
-            val game = AwaitingGame(gameId++, username, ships, boardSize, boardSize)
-            waiting = AwaitingGame(gameId++, username, ships, boardSize, boardSize)
+            val id = gameId++
+            val game = AwaitingGame(id, username, ships, boardSize, boardSize)
+            waiting = game
             return game
         } else {
             val gameStore = store.new(awaiting, username, ships)
@@ -33,7 +35,9 @@ class BattleshipServiceImpl : BattleshipService {
 
     override fun pollGame(gameId: Int): Game? = store[gameId]
 
-    override fun hit(gameId: Int, player: String, coordinate: Coordinate): Game? = store[gameId]?.hit(coordinate, player)
+    override fun hit(gameId: Int, player: String, coordinate: Coordinate): Game {
+        return store[gameId]?.hit(coordinate, player) ?: throw IllegalArgumentException("Game $gameId does not exist.")
+    }
 
     override fun isCompleted(gameId: Int): Boolean = store[gameId]?.isCompleted() ?: false
 

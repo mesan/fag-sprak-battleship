@@ -28,20 +28,20 @@ class BattleshipRestController @Autowired constructor(val service: BattleshipSer
     @RequestMapping(
             consumes = arrayOf("application/json"),
             method = arrayOf(RequestMethod.POST),
-            value = "/hit/{gameId}/")
+            value = "/hit/{gameId}/{username}")
     fun hit(@PathVariable gameId: Int,
             @PathVariable username: String,
-            coordinate: Coordinate): Game? {
+            @RequestBody coordinate: Coordinate): Game {
         return service.hit(gameId, username, coordinate)
     }
 
     @RequestMapping(value = "/isCompleted/{gameId}")
-    fun isCompleted(gameId: Int): Boolean {
+    fun isCompleted(@PathVariable gameId: Int): Boolean {
         return service.isCompleted(gameId)
     }
 
     @RequestMapping(value = "/getWinner/{gameId}")
-    fun getWinner(gameId: Int): String? {
+    fun getWinner(@PathVariable gameId: Int): String? {
         return service.getWinner(gameId)
     }
 

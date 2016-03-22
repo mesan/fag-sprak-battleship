@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 data class Ship(@JsonProperty("start") val start: Coordinate, @JsonProperty("end") val end: Coordinate) {
 
     init {
-        require(start.x != end.x && start.y != end.y) {
+        require(start.x == end.x || start.y == end.y) {
             "The ship must be placed either horizontally or vertically."
         }
     }

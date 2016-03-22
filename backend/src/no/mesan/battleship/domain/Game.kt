@@ -7,7 +7,9 @@ class Game(val gameId: Int, val player1: String, val player2: String,
     fun isCompleted(): Boolean = player1Board.isCompleted() || player2Board.isCompleted()
 
     fun getWinner(): String? {
-        if (player1Board.isCompleted()) {
+        if (player1Board.isCompleted() && player2Board.isCompleted()) {
+            return "Draw";
+        } else if (player1Board.isCompleted()) {
             return player2
         } else if (player2Board.isCompleted()) {
             return player1
