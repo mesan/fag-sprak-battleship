@@ -6,5 +6,5 @@ package no.mesan.battleship.domain
         val player2: String,
         val player1Board: Board,
         val player2Board: Board,
-        val turn: Boolean,
+        val turn: Boolean, // true = player1
         val winner: String?)
