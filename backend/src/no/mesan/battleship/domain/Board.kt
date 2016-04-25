@@ -22,7 +22,17 @@ data class Board(val board: List<List<Cell>>) {
 
     fun withShips(ships: List<Ship>): Board {
         require(board.all2d { !it.isOccupied })
-        throw NotImplementedError()
+
+        // (0, (1,2)), (0, (1,3)),(0, (1,4))
+        val indexedShipsWithCoords: Map<Pair<Int,Int>, Int> =
+                ships.withIndex()
+                        .flatMap { iv -> iv.value.getShipCoords().map { coord -> Pair(coord, iv.index) } }
+                        .toMap()
+
+        val cords = (0 until board.size).map { x -> (0 until board.size).map { y -> Pair(x,y)}} // 2d liste
+        val newCells = cords.map { pair -> pair .map { pair -> Cell(pair.first * pair.second, indexedShipsWithCoords.get(pair), false)} }
+
+        return Board(newCells)
     }
 
     fun hit(coordinate: Coordinate): Board {
