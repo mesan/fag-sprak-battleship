@@ -8,6 +8,7 @@ import no.mesan.battleship.service.BattleshipService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
+@CrossOrigin(origins = arrayOf("*"))
 @RestController
 class BattleshipRestController @Autowired constructor(val service: BattleshipService) {
 

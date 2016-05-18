@@ -1,7 +1,7 @@
 package no.mesan.battleship.domain
 
 class Game(val gameId: Int, val player1: String, val player2: String,
-           private val player1Board: Board, private val player2Board: Board,
+           val player1Board: Board, val player2Board: Board,
            private val turn: Boolean) {
 
     fun isCompleted(): Boolean = player1Board.isCompleted() || player2Board.isCompleted()
