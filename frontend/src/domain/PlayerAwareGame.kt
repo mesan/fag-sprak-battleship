@@ -1,6 +1,6 @@
 package no.mesan.battleship.domain
 
-@native data class PlayerAwareGame(
+data class PlayerAwareGame(
         val gameId: Int,
         val myName: String,
         val otherName: String,

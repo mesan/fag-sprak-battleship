@@ -13,5 +13,5 @@ public fun <RESULT> post(url:String, data:String, success: ((RESULT) -> Unit)) :
 }
 
 public fun <RESULT> get(url:String, loaded:(response:RESULT) -> Unit) : Unit {
-    ajaxGet(url, loaded)
+    ajaxGet<RESULT>(url, loaded)
 }

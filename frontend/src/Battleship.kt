@@ -2,7 +2,6 @@
 import net.yested.Component
 import net.yested.div
 import net.yested.el
-import no.mesan.http.get
 
 @native class GameState {
     val board : Array<IntArray>
@@ -11,14 +10,14 @@ import no.mesan.http.get
 data class Coordinate(var x:Int, var y:Int) {
 }
 
-fun main(args: Array<String>) {
+/*fun main(args: Array<String>) {
     get<String>("test.txt") {
         response ->
         val gamestate = JSON.parse<GameState>(response)
         println(response)
         displayBoard(gamestate.board, null, null)
     }
-}
+}*/
 
 
 fun displayBoard(board:Array<IntArray>, start:Coordinate?, current:Coordinate?) {
