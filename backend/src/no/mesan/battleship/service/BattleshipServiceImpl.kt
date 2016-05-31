@@ -37,7 +37,9 @@ class BattleshipServiceImpl : BattleshipService {
     override fun pollGame(gameId: Int): Game? = store[gameId]
 
     override fun hit(gameId: Int, player: String, coordinate: Coordinate): Game {
-        return store[gameId]?.hit(coordinate, player) ?: throw IllegalArgumentException("Game $gameId does not exist.")
+        val game = store[gameId]?.hit(coordinate, player) ?: throw IllegalArgumentException("Game $gameId does not exist.")
+        store.update(game)
+        return game
     }
 
     override fun isCompleted(gameId: Int): Boolean = store[gameId]?.isCompleted() ?: false
