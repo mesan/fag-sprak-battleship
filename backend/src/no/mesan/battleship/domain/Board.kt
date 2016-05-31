@@ -43,7 +43,6 @@ data class Board(val board: List<List<Cell>>) {
                     Cell(cell.id, shipId = indexedShipsWithCoords[coordinate.toPair()])
                 }
 
-
         return Board(newCells)
     }
 
