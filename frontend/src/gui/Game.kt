@@ -12,27 +12,38 @@ import kotlin.browser.window
 
 fun startGame(awaitingGame: AwaitingGame) {
     pollGame(awaitingGame.gameId, awaitingGame.player1) {
-        game -> renderGame(game)
-        if (!game.myVictory && !game.otherVictory) {
-            window.setTimeout({
-                startGame(awaitingGame)
-            }, 1000)
+        game ->
+        window.setTimeout({
+            startGame(awaitingGame)
+        }, 1000)
+        if (game != null) {
+            renderGame(game)
         }
     }
 }
 
 fun renderGame(game: PlayerAwareGame) {
-    val otherBoard = buildBoard(game.otherBoard){
+    println("Render")
+    println(game)
+    val otherBoard = buildOtherBoard(game.otherBoard){
         coordinate -> shootGame(game.gameId, game.myName, coordinate) {
             // TODO?
         }
     }
 
-    val myBoard = buildBoard(game.myBoard) {
-        coordinate -> // Nothing
-    }
+    val myBoard = buildMyBoard(game.myBoard)
 
     val page = div {
+        if (game.myVictory) {
+            +div(clazz="text") {
+                +"You won :D"
+            }
+        }
+        if (game.otherVictory) {
+            +div(clazz="text") {
+                +"You lost :("
+            }
+        }
         +otherBoard
         +myBoard
     }
@@ -40,19 +51,40 @@ fun renderGame(game: PlayerAwareGame) {
     display(page)
 }
 
-private fun buildBoard(board: Board, onClick: (Coordinate) -> Unit): Component {
+private fun buildOtherBoard(board: Board, onClick: (Coordinate) -> Unit): Component {
     val size = 8 // TODO: Softcode
     return div (clazz = "table") {
         for (row in 0 until size) {
             div(clazz = "row") {
                 for (col in 0 until size) {
                     val cell = board.board[row][col]
-                    div(clazz = "cell") {
+                    val hittype =
+                            if (cell.hit)
+                                if (cell.shipId != null) "hit"
+                                else "miss"
+                            else "none"
+                    div(clazz = "cell $hittype") {
                         onclick = {
                             onClick(Coordinate(row, col))
                         }
-                        val text = cell.shipId ?: ""
-                        +"$text" // TODO
+                        // TODO?
+                    }
+                }
+            }
+        }
+    }
+}
+
+private fun buildMyBoard(board: Board): Component {
+    val size = 8 // TODO: Softcode
+    return div (clazz = "table") {
+        for (row in 0 until size) {
+            div(clazz = "row") {
+                for (col in 0 until size) {
+                    val cell = board.board[row][col]
+                    val shipsection = if (cell.shipId != null) "middle" else "none"
+                    div(clazz = "cell $shipsection") {
+                        // TODO?
                     }
                 }
             }

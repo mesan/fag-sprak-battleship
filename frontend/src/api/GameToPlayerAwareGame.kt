@@ -11,7 +11,7 @@ fun toPlayerAwareGame(game: Game, username: String): PlayerAwareGame {
             if (reverse) game.player1 else game.player2,
             if (reverse) game.player2Board else game.player1Board,
             if (reverse) game.player1Board else game.player2Board,
-            reverse && game.winner == username,
-            reverse && game.winner != username,
+            if (reverse) game.winner == game.player2 else game.winner == game.player1,
+            if (reverse) game.winner == game.player1 else game.winner == game.player2,
             reverse xor game.turn)
 }
