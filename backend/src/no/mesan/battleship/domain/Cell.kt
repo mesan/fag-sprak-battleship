@@ -1,8 +1,9 @@
 package no.mesan.battleship.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonProperty
 
-data class Cell(@JsonIgnore val coordinate: Coordinate, val shipId: Int? = null, val isHit: Boolean = false) {
+data class Cell(@JsonIgnore val coordinate: Coordinate, val shipId: Int? = null, @JsonProperty("isHit") val isHit: Boolean = false) {
 
     val isOccupied: Boolean
         @JsonIgnore get() = shipId != null

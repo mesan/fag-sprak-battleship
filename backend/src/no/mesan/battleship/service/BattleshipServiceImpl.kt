@@ -29,6 +29,7 @@ class BattleshipServiceImpl : BattleshipService {
         } else {
             val gameStore = store.new(awaiting, username, ships)
             store = gameStore
+            waiting = null
             return AwaitingGame(awaiting.gameId, username, ships, boardSize, boardSize)
         }
     }
