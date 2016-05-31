@@ -82,8 +82,14 @@ private fun buildMyBoard(board: Board): Component {
             div(clazz = "row") {
                 for (col in 0 until size) {
                     val cell = board.board[row][col]
-                    val shipsection = if (cell.shipId != null) "middle" else "none"
-                    div(clazz = "cell $shipsection") {
+                    val hittype =
+                            if (cell.hit)
+                                if (cell.shipId != null) "hit"
+                                else "miss"
+                            else
+                                if (cell.shipId != null) "middle"
+                                else "none"
+                    div(clazz = "cell $hittype") {
                         // TODO?
                     }
                 }
