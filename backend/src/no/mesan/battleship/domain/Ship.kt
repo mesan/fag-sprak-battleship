@@ -12,6 +12,7 @@ data class Ship(@JsonProperty("start") val start: Coordinate, @JsonProperty("end
 
     fun length() = Math.abs(end.x - start.x) + Math.abs(end.y - start.y) + 1
 
-    fun getShipCoords() = (start.x..end.x).flatMap() { x -> (start.y..end.y).map { y -> Pair(x,y) }}
+    fun getShipCoords(): List<Coordinate> =
+            (start.x..end.x).flatMap() { x -> (start.y..end.y).map { y -> Coordinate(x,y) }}
 
 }

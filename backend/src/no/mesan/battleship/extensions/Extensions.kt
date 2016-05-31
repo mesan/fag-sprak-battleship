@@ -22,13 +22,13 @@ fun <T> List<List<T>>.any2d(predicate: (T) -> Boolean): Boolean = any { it.any {
 
 
 // 2D list creation functions
-fun <T> listOfLists(xSize: Int, ySize: Int, initializer: (Int) -> T): List<List<T>> {
+fun <T> listOfLists(xSize: Int, ySize: Int, initializer: (Int, Int) -> T): List<List<T>> {
     val list = mutableListOf<List<T>>()
 
     for (y in 0 until ySize) {
         val inner = mutableListOf<T>()
         for (x in 0 until xSize) {
-            inner.add(initializer(y * xSize + x))
+            inner.add(initializer(x, y))
         }
         list.add(inner)
     }
@@ -36,4 +36,4 @@ fun <T> listOfLists(xSize: Int, ySize: Int, initializer: (Int) -> T): List<List<
     return list
 }
 
-fun <T> listOfLists(size: Int, initializer: (Int) -> T): List<List<T>> = listOfLists(size, size, initializer)
+fun <T> listOfLists(size: Int, initializer: (Int, Int) -> T): List<List<T>> = listOfLists(size, size, initializer)

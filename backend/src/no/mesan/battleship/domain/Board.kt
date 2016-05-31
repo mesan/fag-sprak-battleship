@@ -16,33 +16,23 @@ data class Board(val board: List<List<Cell>>) {
     }
 
     companion object {
-        fun empty(size: Int) = Board(listOfLists(size, { Cell(it) }))
-        fun empty(xSize: Int, ySize: Int) = Board(listOfLists(xSize, ySize, { Cell(it) }))
+        fun empty(size: Int) = Board(listOfLists(size, { x, y -> Cell(Coordinate(x, y)) }))
+        fun empty(xSize: Int, ySize: Int) = Board(listOfLists(xSize, ySize, { x, y -> Cell(Coordinate(x, y)) }))
     }
 
     fun withShips(ships: List<Ship>): Board {
         require(board.all2d { !it.isOccupied })
 
         // (0, (1,2)), (0, (1,3)),(0, (1,4))
-        val indexedShipsWithCoords: Map<Pair<Int, Int>, Int> =
+        val indexedShipsWithCoords: Map<Coordinate, Int> =
                 ships.withIndex()
                         .flatMap { iv -> iv.value.getShipCoords().map { coord -> coord to iv.index } }
                         .toMap()
 
-        // A 2D list of the cells with their coordinates.
-        val cords: List<List<Pair<Cell, Coordinate>>> =
-                (0 until board.size).map { x ->
-                    (0 until board.size).map { y ->
-                        board[x][y] to Coordinate(x, y)
-                    }
-                }
-
         val newCells: List<List<Cell>> =
-                cords.map2d { pair ->
-                    val (cell, coordinate) = pair
-                    Cell(cell.id, shipId = indexedShipsWithCoords[coordinate.toPair()])
+                board.map2d { cell ->
+                    Cell(cell.coordinate, shipId = indexedShipsWithCoords[cell.coordinate])
                 }
-
 
         return Board(newCells)
     }
@@ -55,7 +45,7 @@ data class Board(val board: List<List<Cell>>) {
         }
 
         return Board(board.map2d {
-            if (it.id == cell.id) {
+            if (it.coordinate == cell.coordinate) {
                 cell.hit()
             } else {
                 it
