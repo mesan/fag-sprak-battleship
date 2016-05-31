@@ -38,7 +38,7 @@ class BattleshipServiceImpl : BattleshipService {
 
     override fun hit(gameId: Int, player: String, coordinate: Coordinate): Game {
         val game = store[gameId]?.hit(coordinate, player) ?: throw IllegalArgumentException("Game $gameId does not exist.")
-        store.update(game)
+        store = store.update(game)
         return game
     }
 
