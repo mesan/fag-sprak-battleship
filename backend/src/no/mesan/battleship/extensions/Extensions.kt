@@ -25,10 +25,10 @@ fun <T> List<List<T>>.any2d(predicate: (T) -> Boolean): Boolean = any { it.any {
 fun <T> listOfLists(xSize: Int, ySize: Int, initializer: (Int) -> T): List<List<T>> {
     val list = mutableListOf<List<T>>()
 
-    for (i in 0 until xSize) {
+    for (y in 0 until ySize) {
         val inner = mutableListOf<T>()
-        for (j in 0 until ySize) {
-            inner.add(initializer(i * ySize + j))
+        for (x in 0 until xSize) {
+            inner.add(initializer(y * xSize + x))
         }
         list.add(inner)
     }

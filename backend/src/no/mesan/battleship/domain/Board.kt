@@ -24,13 +24,25 @@ data class Board(val board: List<List<Cell>>) {
         require(board.all2d { !it.isOccupied })
 
         // (0, (1,2)), (0, (1,3)),(0, (1,4))
-        val indexedShipsWithCoords: Map<Pair<Int,Int>, Int> =
+        val indexedShipsWithCoords: Map<Pair<Int, Int>, Int> =
                 ships.withIndex()
-                        .flatMap { iv -> iv.value.getShipCoords().map { coord -> Pair(coord, iv.index) } }
+                        .flatMap { iv -> iv.value.getShipCoords().map { coord -> coord to iv.index } }
                         .toMap()
 
-        val cords = (0 until board.size).map { x -> (0 until board.size).map { y -> Pair(x,y)}} // 2d liste
-        val newCells = cords.map { pair -> pair .map { pair -> Cell(pair.first * pair.second, indexedShipsWithCoords.get(pair), false)} }
+        // A 2D list of the cells with their coordinates.
+        val cords: List<List<Pair<Cell, Coordinate>>> =
+                (0 until board.size).map { x ->
+                    (0 until board.size).map { y ->
+                        board[x][y] to Coordinate(x, y)
+                    }
+                }
+
+        val newCells: List<List<Cell>> =
+                cords.map2d { pair ->
+                    val (cell, coordinate) = pair
+                    Cell(cell.id, shipId = indexedShipsWithCoords[coordinate.toPair()])
+                }
+
 
         return Board(newCells)
     }
