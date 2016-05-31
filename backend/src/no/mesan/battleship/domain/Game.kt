@@ -26,10 +26,10 @@ class Game(val gameId: Int, val player1: String, val player2: String,
         val (newPlayer1, newPlayer2) =
                 if (turn) {
                     require(player == player1, { "${player1} tried to hit on the opponents turn." })
-                    Pair(player1Board.hit(coordinate), player2Board)
+                    Pair(player1Board, player2Board.hit(coordinate))
                 } else {
                     require(player == player2, { "${player2} tried to hit on the opponents turn." })
-                    Pair(player1Board, player2Board.hit(coordinate))
+                    Pair(player1Board.hit(coordinate), player2Board)
                 }
 
         return Game(gameId, player1, player2, newPlayer1, newPlayer2, !turn)
